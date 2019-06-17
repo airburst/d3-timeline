@@ -1,45 +1,48 @@
 import React from 'react';
+import * as d3 from 'd3';
 import TimeBar from './TimeBar';
-
-const timeData = [
-  {
-    deviceId: 'Kitchen',
-    data: [
-      {
-        on: new Date(2019, 6, 16, 7, 5, 0).getTime(),
-        off: new Date(2019, 6, 16, 7, 30, 30).getTime()
-      },
-      {
-        on: new Date(2019, 6, 16, 10, 20, 0).getTime(),
-        off: new Date(2019, 6, 16, 10, 30, 0).getTime()
-      },
-      {
-        on: new Date(2019, 6, 16, 12, 0, 0).getTime(),
-        off: new Date(2019, 6, 16, 13, 0, 0).getTime()
-      },
-      {
-        on: new Date(2019, 6, 16, 18, 0, 0).getTime(),
-        off: new Date(2019, 6, 16, 18, 30, 0).getTime()
-      }
-    ]
-  },
-  {
-    deviceId: 'Bedroom1',
-    data: [
-      {
-        on: new Date(2019, 6, 15, 22, 0, 0).getTime(),
-        off: new Date(2019, 6, 16, 7, 0, 30).getTime()
-      },
-      {
-        on: new Date(2019, 6, 16, 21, 20, 0).getTime()
-        // No off time yet
-      }
-    ]
-  }
-];
+import timeData from './timeData'; // Example data
 
 const startDate = new Date(2019, 6, 16, 0, 0, 0).getTime();
 const endDate = new Date(2019, 6, 16, 23, 59, 59).getTime();
+
+const displayGrid = (node, width, data, start, end) => {
+  const containerPadding = 64;
+  const height = 40;
+
+  // Remove existing data on resize
+  d3.select(node)
+    .selectAll('*')
+    .remove();
+
+  // define scales
+  var xScale = d3
+    .scaleLinear()
+    .domain([start, end])
+    .range([0, width]);
+  // .clamp(1);
+
+  // Add canvas
+  const svg = d3
+    .select(node)
+    .attr('width', width - containerPadding)
+    .attr('height', height)
+    .style('background-color', '#f6f6f6');
+
+  // add timline data series
+  svg
+    .append('g')
+    .attr('id', 'timeline-data')
+    .selectAll('rect')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('x', d => xScale(d.on))
+    .attr('y', 0)
+    .attr('width', d => xScale(d.off || end) - xScale(d.on))
+    .attr('height', height)
+    .attr('fill', '#0086B1');
+};
 
 // TODO: Add chart axes and device line labels
 const TimeChart = () => {

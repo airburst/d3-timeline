@@ -1,5 +1,5 @@
 import React from 'react';
-import TimeChart from './components/TimeChart';
+import TimeChart from './components/TimeChartWithAxesTest';
 import WindowDimensionsProvider from './components/WindowDimensionsProvider';
 import styled from 'styled-components';
 
