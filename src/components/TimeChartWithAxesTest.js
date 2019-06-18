@@ -3,7 +3,6 @@ import TimeBar from './TimeBar';
 import Axes from './Axes';
 import timeData from './timeData'; // Example data
 import { scaleBand, scaleTime } from 'd3-scale';
-// import * as d3 from 'd3';
 
 const startDate = new Date(2019, 6, 16, 0, 0, 0);
 const endDate = new Date(2019, 6, 16, 23, 59, 59);
@@ -17,7 +16,7 @@ const TimeChart = () => {
     .domain([startDate, endDate])
     .range([margins.left, svgDimensions.width - margins.right]);
 
-  xScale(new Date(2019, 6, 16, 12, 0, 0)); // 500
+  console.log(xScale(new Date(2019, 6, 16, 12, 0, 0))); // 500
 
   const yScale = scaleBand()
     .padding(0.5)

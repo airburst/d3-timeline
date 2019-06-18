@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import * as d3 from 'd3';
+import { select as d3Select } from 'd3-selection';
+import { scaleTime } from 'd3-scale';
 import { useWindowDimensions } from './WindowDimensionsProvider';
 
 // https://github.com/flrs/visavail/blob/master/visavail/js/visavail.js
@@ -8,20 +9,17 @@ const displayTimeline = (node, width, data, start, end) => {
   const height = 40;
 
   // Remove existing data on resize
-  d3.select(node)
+  d3Select(node)
     .selectAll('*')
     .remove();
 
-  // define scales
-  var xScale = d3
-    .scaleLinear()
+  // Define X (time) Scale
+  var xScale = scaleTime()
     .domain([start, end])
     .range([0, width]);
-  // .clamp(1);
 
   // Add canvas
-  const svg = d3
-    .select(node)
+  const svg = d3Select(node)
     .attr('width', width - containerPadding)
     .attr('height', height)
     .style('background-color', '#f6f6f6');
