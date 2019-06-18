@@ -2,7 +2,8 @@ import React from 'react';
 import TimeBar from './TimeBar';
 import Axes from './Axes';
 import timeData from './timeData'; // Example data
-import { scaleBand, scaleLinear } from 'd3-scale';
+import { scaleBand, scaleTime } from 'd3-scale';
+// import * as d3 from 'd3';
 
 const startDate = new Date(2019, 6, 16, 0, 0, 0);
 const endDate = new Date(2019, 6, 16, 23, 59, 59);
@@ -12,9 +13,11 @@ const TimeChart = () => {
   const margins = { top: 50, right: 20, bottom: 100, left: 60 };
   const svgDimensions = { width: 1200, height: 500 };
 
-  const xScale = scaleLinear()
+  const xScale = scaleTime()
     .domain([startDate, endDate])
     .range([margins.left, svgDimensions.width - margins.right]);
+
+  xScale(new Date(2019, 6, 16, 12, 0, 0)); // 500
 
   const yScale = scaleBand()
     .padding(0.5)

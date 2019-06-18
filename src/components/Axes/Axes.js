@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Axis from './Axis';
-import * as d3 from 'd3';
+import * as d3Time from 'd3-time';
+import * as d3TimeFormat from 'd3-time-format';
 
-export default ({ scales, margins, svgDimensions }) => {
+const Axes = ({ scales, margins, svgDimensions }) => {
   const { height, width } = svgDimensions;
 
   const xProps = {
@@ -10,7 +12,8 @@ export default ({ scales, margins, svgDimensions }) => {
     scale: scales.xScale,
     translate: `translate(0, ${margins.top})`,
     tickSize: height - margins.top - margins.bottom,
-    tickFormat: date => d3.timeFormat('%I %p')
+    tickFormat: d3TimeFormat.timeFormat('%H:%M'),
+    ticks: d3Time.timeHour.every(1)
   };
 
   const yProps = {
@@ -27,3 +30,11 @@ export default ({ scales, margins, svgDimensions }) => {
     </g>
   );
 };
+
+Axes.propTypes = {
+  scales: PropTypes.object.isRequired,
+  margins: PropTypes.object.isRequired,
+  svgDimensions: PropTypes.object.isRequired
+};
+
+export default Axes;
