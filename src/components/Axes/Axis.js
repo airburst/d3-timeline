@@ -14,6 +14,9 @@ const renderAxis = (node, orient, scale, tickSize, ticks, tickFormat) => {
     .ticks(ticks);
 
   d3Select(node).call(axis);
+
+  // Remove first tick
+  // d3Select('.Axis.Axis-Top:first-child text').remove();
 };
 
 const Axis = ({ orient, translate, scale, tickSize, ticks, tickFormat }) => {
