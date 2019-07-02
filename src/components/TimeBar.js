@@ -1,11 +1,9 @@
 import React, { useCallback } from 'react';
 import { select as d3Select } from 'd3-selection';
 import { scaleTime } from 'd3-scale';
-import { useWindowDimensions } from './WindowDimensionsProvider';
 
 // https://github.com/flrs/visavail/blob/master/visavail/js/visavail.js
 const displayTimeline = (node, width, data, start, end) => {
-  const containerPadding = 64;
   const height = 40;
 
   // Remove existing data on resize
@@ -20,7 +18,7 @@ const displayTimeline = (node, width, data, start, end) => {
 
   // Add canvas
   const svg = d3Select(node)
-    .attr('width', width - containerPadding)
+    .attr('width', width)
     .attr('height', height)
     .style('background-color', '#f6f6f6');
 
@@ -39,9 +37,7 @@ const displayTimeline = (node, width, data, start, end) => {
     .attr('fill', '#0086B1');
 };
 
-const TimeBar = ({ data = [], start, end }) => {
-  const { width } = useWindowDimensions();
-
+const TimeBar = ({ width, data = [], start, end }) => {
   // Attach timeline content to node once ref is rendered
   const timelineRef = useCallback(
     node => {
@@ -52,11 +48,7 @@ const TimeBar = ({ data = [], start, end }) => {
     [data, end, start, width]
   );
 
-  return (
-    <div id="timeline">
-      <svg ref={timelineRef} />
-    </div>
-  );
+  return <svg ref={timelineRef} />;
 };
 
 export default TimeBar;

@@ -7,26 +7,22 @@ import * as d3TimeFormat from 'd3-time-format';
 const Axes = ({ scales, margins, svgDimensions }) => {
   const { height, width } = svgDimensions;
 
-  const xProps = {
-    orient: 'Top',
-    scale: scales.xScale,
-    translate: `translate(0, ${margins.top})`,
-    tickSize: height - margins.top - margins.bottom,
-    tickFormat: d3TimeFormat.timeFormat('%H:%M'),
-    ticks: d3Time.timeHour.every(1)
-  };
-
-  const yProps = {
-    orient: 'Left',
-    scale: scales.yScale,
-    translate: `translate(${margins.left}, 0)`,
-    tickSize: width - margins.left - margins.right
-  };
-
   return (
     <g>
-      <Axis {...xProps} />
-      <Axis {...yProps} />
+      <Axis
+        orient="Top"
+        scale={scales.xScale}
+        translate={`translate(0, ${margins.top})`}
+        tickSize={height - margins.top - margins.bottom}
+        tickFormat={d3TimeFormat.timeFormat('%H:%M')}
+        ticks={d3Time.timeHour.every(1)}
+      />
+      <Axis
+        orient="Left"
+        scale={scales.yScale}
+        translate={`translate(${margins.left}, 0)`}
+        tickSize={width - margins.left - margins.right}
+      />
     </g>
   );
 };
