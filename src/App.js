@@ -1,22 +1,9 @@
 import React from 'react';
-import TimeChart from './components/TimeChart';
-import WindowDimensionsProvider from './components/WindowDimensionsProvider';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  padding: 32px;
-`;
+import TimeChart from './components/TimeChartWithAxesTest';
+// import Test from './components/Test';
 
 function App() {
-  return (
-    <WindowDimensionsProvider>
-      <Container>
-        <div className="App">
-          <TimeChart />
-        </div>
-      </Container>
-    </WindowDimensionsProvider>
-  );
+  return <TimeChart />;
 }
 
 export default App;

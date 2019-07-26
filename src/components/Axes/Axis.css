@@ -1,0 +1,15 @@
+.Axis path,
+.Axis line {
+  stroke: #e2e2e2;
+  shape-rendering: crispEdges;
+}
+
+.Axis text {
+  font-size: 12px;
+  font-family: "Lato";
+  fill: #333;
+}
+
+.Axis-Bottom text {
+  text-anchor: center;
+}
