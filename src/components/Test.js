@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import D3Component from './D3Component';
-import useResizeObserver from 'use-resize-observer';
+import useResizeObserver from './useResizeObserver';
 
 const Container = styled.div`
   display: flex;
@@ -10,7 +10,8 @@ const Container = styled.div`
 `;
 
 const Picked = styled.div`
-  height: 24px;
+  height: 48px;
+  background-color: #f6f6f6;
 `;
 
 const Canvas = styled.div`

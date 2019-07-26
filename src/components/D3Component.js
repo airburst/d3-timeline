@@ -23,6 +23,7 @@ class D3Component {
       svg,
       props: { data, width, height }
     } = this;
+
     svg
       .selectAll('circle')
       .data(data)
@@ -42,6 +43,7 @@ class D3Component {
 
   resize = (width, height) => {
     const { svg } = this;
+
     svg.attr('width', width).attr('height', height);
     svg
       .selectAll('circle')

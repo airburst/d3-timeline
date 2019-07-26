@@ -2,9 +2,14 @@ import React, { useCallback } from 'react';
 import { select as d3Select } from 'd3-selection';
 import { scaleTime } from 'd3-scale';
 
+// Sizing constants for timeline chart
+const axisHeaderHeight = 32;
+const spacing = 2;
+const height = 40;
+
 // https://github.com/flrs/visavail/blob/master/visavail/js/visavail.js
-const displayTimeline = (node, width, data, start, end) => {
-  const height = 40;
+const displayTimeline = (node, width, data, start, end, position) => {
+  const top = axisHeaderHeight + position * height + position * spacing;
 
   // Remove existing data on resize
   d3Select(node)
@@ -19,14 +24,26 @@ const displayTimeline = (node, width, data, start, end) => {
   // Add canvas
   const svg = d3Select(node)
     .attr('width', width)
-    .attr('height', height)
-    .style('background-color', '#f6f6f6');
+    .attr('height', 120);
 
   // add timline data series
-  svg
+  const g = svg
     .append('g')
-    .attr('id', 'timeline-data')
-    .selectAll('rect')
+    .attr('transform', `translate(0,${top})`)
+    .attr('id', 'timeline-data');
+
+  // Bar background (rectangle)
+  g.append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', width)
+    .attr('height', height)
+    .attr('fill', '#f6f6f6')
+    .attr('class', 'bar-bg')
+    .attr('style', 'opacity: 0.8');
+
+  // Data-driven bars
+  g.selectAll('rect:not(.bar-bg)')
     .data(data)
     .enter()
     .append('rect')
@@ -37,15 +54,15 @@ const displayTimeline = (node, width, data, start, end) => {
     .attr('fill', '#0086B1');
 };
 
-const TimeBar = ({ width, data = [], start, end }) => {
+const TimeBar = ({ width, data = [], start, end, position }) => {
   // Attach timeline content to node once ref is rendered
   const timelineRef = useCallback(
     node => {
       if (node !== null) {
-        displayTimeline(node, width, data, start, end);
+        displayTimeline(node, width, data, start, end, position);
       }
     },
-    [data, end, start, width]
+    [data, end, start, width, position]
   );
 
   return <svg ref={timelineRef} />;

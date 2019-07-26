@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import Axes from './Axes';
 import timeData from './timeData'; // Example data
@@ -26,6 +26,8 @@ const TimeChart = () => {
     .padding(0.5)
     .range([height - margins.bottom, margins.top]);
 
+  // console.log(timeData.map(t => ({ [t.deviceId]: t.data.length })));
+
   return (
     <Container ref={chartRef}>
       <svg width={width} height={height}>
@@ -34,18 +36,19 @@ const TimeChart = () => {
           margins={margins}
           svgDimensions={{ width, height }}
         />
+        {timeData.map((td, i) => (
+          <TimeBar
+            key={td.deviceId}
+            data={td.data}
+            width={width}
+            start={startDate}
+            end={endDate}
+            position={i}
+          />
+        ))}
       </svg>
-      {timeData.map(td => (
-        <TimeBar
-          key={td.deviceId}
-          data={td.data}
-          width={width}
-          start={startDate}
-          end={endDate}
-        />
-      ))}
     </Container>
   );
 };
 
-export default TimeChart;
+export default memo(TimeChart);
