@@ -1,7 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
 import TimeBar from './TimeBar';
-import timeData from './timeData'; // Example data
 
 const startDate = new Date(2019, 6, 16, 0, 0, 0).getTime();
 const endDate = new Date(2019, 6, 16, 23, 59, 59).getTime();
@@ -45,10 +44,10 @@ const displayGrid = (node, width, data, start, end) => {
 };
 
 // TODO: Add chart axes and device line labels
-const TimeChart = () => {
+const TimeChart = ({ data }) => {
   return (
     <div>
-      {timeData.map(td => (
+      {data.map(td => (
         <TimeBar
           key={td.deviceId}
           data={td.data}

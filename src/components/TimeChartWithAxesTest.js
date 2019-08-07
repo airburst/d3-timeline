@@ -1,22 +1,23 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import Axes from './Axes';
-import timeData from './timeData'; // Example data
 import { scaleBand, scaleTime } from 'd3-scale';
 import useResizeObserver from 'use-resize-observer';
 import TimeBar from './TimeBar';
 
 const Container = styled.div`
   border-top: 1px solid #e2e2e2;
-  height: 600px;
+  width: 1440px;
+  height: 400px;
+  margin: 100px auto;
 `;
 
 const startDate = new Date(2019, 6, 16, 0, 0, 0);
 const endDate = new Date(2019, 6, 16, 23, 59, 59);
 
-const TimeChart = () => {
+const TimeChart = ({ data }) => {
   const [chartRef, width, height] = useResizeObserver();
-  const margins = { top: 32, right: 1, bottom: 1, left: 0 };
+  const margins = { top: 32, right: 1, bottom: 1, left: 200 };
 
   const xScale = scaleTime()
     .domain([startDate, endDate])
@@ -36,7 +37,7 @@ const TimeChart = () => {
           margins={margins}
           svgDimensions={{ width, height }}
         />
-        {timeData.map((td, i) => (
+        {data.map((td, i) => (
           <TimeBar
             key={td.deviceId}
             data={td.data}
@@ -44,6 +45,7 @@ const TimeChart = () => {
             start={startDate}
             end={endDate}
             position={i}
+            margins={margins}
           />
         ))}
       </svg>

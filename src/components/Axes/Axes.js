@@ -18,6 +18,14 @@ const Axes = ({ scales, margins, svgDimensions }) => {
         ticks={d3Time.timeHour.every(1)}
       />
       <Axis
+        orient="Top"
+        scale={scales.xScale}
+        translate={`translate(0,0)`}
+        tickSize={32}
+        // tickFormat={d3TimeFormat.timeFormat('%H:%M')}
+        // ticks={d3Time.timeHour.every(1)}
+      />
+      <Axis
         orient="Left"
         scale={scales.yScale}
         translate={`translate(${margins.left}, 0)`}

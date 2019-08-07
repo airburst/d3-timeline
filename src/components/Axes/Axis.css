@@ -5,11 +5,7 @@
 }
 
 .Axis text {
-  font-size: 12px;
+  font-size: 14px;
   font-family: "Lato";
   fill: #333;
-}
-
-.Axis-Bottom text {
-  text-anchor: center;
 }
