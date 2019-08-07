@@ -24,7 +24,7 @@ const Container = styled.div`
 `;
 
 const InnerContainer = styled.div`
-  height: 400px;
+  height: 100%;
   width: 100%;
   background-color: white;
 `;

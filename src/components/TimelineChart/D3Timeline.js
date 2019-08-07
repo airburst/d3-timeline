@@ -80,7 +80,8 @@ class D3Component {
     selectAll('.time > g.tick > text').attr('transform', `translate(0,-6)`);
 
     // add timline data series
-    const g = svg
+    const labelLayer = svg.append('g').attr('id', 'timeline-data');
+    const dataLayer = svg
       .append('g')
       .attr('transform', `translate(${labelWidth},${headerHeight})`)
       .attr('id', 'timeline-data');
@@ -88,20 +89,24 @@ class D3Component {
     // Add each device time series
     data.forEach((sensor, index) => {
       const top = barY(index);
-      const dividerTop = index * rowHeight;
-      const sensorGroup = g
-        .append('g')
-        // .attr('transform', `translate(${labelWidth},0)`)
-        .attr('id', `timebar-${index}`);
+      const labelGroup = labelLayer.append('g').attr('id', `timebar-${index}`);
+      const sensorGroup = dataLayer.append('g').attr('id', `timebar-${index}`);
 
-      // TODO: Add label
-
-      // Bar background (rectangle)
-      sensorGroup
+      // Bar divider (top)
+      const dividerBase = headerHeight + (index + 1) * rowHeight;
+      labelGroup
         .append('path')
-        .attr('d', `M0 ${dividerTop} L${w} ${dividerTop}`)
+        .attr('d', `M0 ${dividerBase} L${w + labelWidth} ${dividerBase}`)
         .attr('class', 'timeline-divider');
 
+      labelGroup
+        .append('text')
+        .text(sensor.deviceId)
+        .attr('x', 8)
+        .attr('y', dividerBase - 12)
+        .attr('class', 'timeline-label');
+
+      // Timeline data bars
       sensorGroup
         .selectAll(`rect:not(.bar-bg)`)
         .data(sensor.data)
