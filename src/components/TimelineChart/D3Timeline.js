@@ -23,6 +23,27 @@ const getWidth = (width, margins) => {
   return w > 0 ? w : 0;
 };
 
+const getTicks = width => {
+  if (!width || width === 0) {
+    return 1;
+  }
+  const timeLabelSize = 48; // 48px
+  const fittable = width / timeLabelSize;
+  if (fittable > 24) {
+    return 1;
+  }
+  if (fittable > 12) {
+    return 2;
+  }
+  if (fittable > 8) {
+    return 3;
+  }
+  if (fittable > 6) {
+    return 4;
+  }
+  return 6;
+};
+
 class D3Component {
   containerEl;
   props;
@@ -48,6 +69,7 @@ class D3Component {
 
     const h = getHeight(height, margins);
     const w = getWidth(width, margins);
+    const numberOfTimeTicks = getTicks(w);
 
     const xScale = scaleTime()
       .domain([start, end])
@@ -58,7 +80,7 @@ class D3Component {
       .scale(xScale)
       .tickSize(h)
       .tickFormat(d3TimeFormat.timeFormat('%H:%M'))
-      .ticks(d3Time.timeHour); //.every(1)
+      .ticks(d3Time.timeHour, numberOfTimeTicks);
 
     // Clear old chart
     svg.selectAll('g').remove();
