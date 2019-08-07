@@ -1,0 +1,29 @@
+.axis path,
+.axis line {
+  stroke: #e2e2e2;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-size: 16px;
+  font-family: "Lato";
+  fill: #333;
+}
+
+.axis-top text {
+  text-anchor: center;
+}
+
+.bar {
+  opacity: 1;
+}
+
+.timeline-divider {
+  stroke: #e5e5e5;
+  stroke-width: 1;
+  fill: none;
+}
+
+.time .tick line {
+  stroke: #f6f6f6;
+}

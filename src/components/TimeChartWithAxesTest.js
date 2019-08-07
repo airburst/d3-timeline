@@ -46,6 +46,8 @@ const TimeChart = ({ data }) => {
             end={endDate}
             position={i}
             margins={margins}
+            xScale={xScale}
+            yScale={yScale}
           />
         ))}
       </svg>

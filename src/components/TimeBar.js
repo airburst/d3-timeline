@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { select as d3Select } from 'd3-selection';
-import { scaleTime } from 'd3-scale';
 
 // Sizing constants for timeline chart
 const axisHeaderHeight = 32;
@@ -10,7 +9,17 @@ const barWidth = 10;
 const barY = (height - barWidth) / 2;
 
 // https://github.com/flrs/visavail/blob/master/visavail/js/visavail.js
-const displayTimeline = (node, margins, width, data, start, end, position) => {
+const displayTimeline = (
+  node,
+  margins,
+  width,
+  data,
+  start,
+  end,
+  position,
+  xScale,
+  yScale
+) => {
   const top = axisHeaderHeight + position * height + position * spacing;
 
   // Remove existing data on resize
@@ -18,10 +27,10 @@ const displayTimeline = (node, margins, width, data, start, end, position) => {
     .selectAll('*')
     .remove();
 
-  // Define X (time) Scale
-  var xScale = scaleTime()
-    .domain([start, end])
-    .range([0, width]);
+  // // Define X (time) Scale
+  // var xScale = scaleTime()
+  //   .domain([start, end])
+  //   .range([0, width]);
 
   // Add canvas
   const svg = d3Select(node)
@@ -57,15 +66,34 @@ const displayTimeline = (node, margins, width, data, start, end, position) => {
     .attr('fill', '#7E0958');
 };
 
-const TimeBar = ({ margins, width, data = [], start, end, position }) => {
+const TimeBar = ({
+  margins,
+  width,
+  data = [],
+  start,
+  end,
+  position,
+  xScale,
+  yScale
+}) => {
   // Attach timeline content to node once ref is rendered
   const timelineRef = useCallback(
     node => {
       if (node !== null) {
-        displayTimeline(node, margins, width, data, start, end, position);
+        displayTimeline(
+          node,
+          margins,
+          width,
+          data,
+          start,
+          end,
+          position,
+          xScale,
+          yScale
+        );
       }
     },
-    [margins, data, end, start, width, position]
+    [margins, width, data, start, end, position, xScale, yScale]
   );
 
   return <svg ref={timelineRef} />;
